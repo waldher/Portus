@@ -25,7 +25,7 @@ RUN zypper addrepo https://download.opensuse.org/repositories/devel:languages:go
     gem install bundler --no-document -v 1.17.3 && \
     update-alternatives --install /usr/bin/bundle bundle /usr/bin/bundle.ruby2.6 3 && \
     update-alternatives --install /usr/bin/bundler bundler /usr/bin/bundler.ruby2.6 3 && \
-    bundle install --retry=3 && \
+    bundle install --path vendor/bundle --retry=3 && \
     go get -u github.com/vbatts/git-validation && \
     go get -u github.com/openSUSE/portusctl && \
     mv /root/go/bin/git-validation /usr/local/bin/ && \
@@ -36,3 +36,6 @@ RUN zypper addrepo https://download.opensuse.org/repositories/devel:languages:go
     zypper clean -a
 
 ADD . .
+
+EXPOSE 3000
+ENTRYPOINT ["/srv/Portus/docker/init"]

@@ -14,7 +14,7 @@ rescue StandardError
 end
 
 password = Rails.application.secrets.portus_password
-if portus_exists && password.present?
+if portus_exists && password.present? && ENV['PORTUS_READONLY'] != 'true'
   portus = User.portus
   portus&.update_attribute("password", Rails.application.secrets.portus_password)
 end

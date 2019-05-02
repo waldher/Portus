@@ -58,6 +58,7 @@ class User < ApplicationRecord
                             authentication_keys: [:username]]
 
   enabled_devise_modules.delete(:validatable) if APP_CONFIG.enabled?("ldap")
+  enabled_devise_modules.delete(:trackable) if ENV['PORTUS_READONLY'] == 'true'
   devise(*enabled_devise_modules)
 
   APPLICATION_TOKENS_MAX = 5
